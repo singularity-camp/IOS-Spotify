@@ -93,8 +93,9 @@
 			isa = PBXGroup;
 			children = (
 				83F6D12B2B7CD900009401D7 /* App */,
-				83F6D12D2B7CDA5E009401D7 /* TabBar */,
 				83F6D12C2B7CDA22009401D7 /* Resources */,
+				83F6D13A2B83A897009401D7 /* Managers */,
+				83F6D12D2B7CDA5E009401D7 /* TabBar */,
 				75C58D3E2B77A57200F1AA6D /* LaunchScreen.storyboard */,
 				75C58D412B77A57200F1AA6D /* Info.plist */,
 			);
@@ -205,6 +206,29 @@
 				83F6D1292B7CBCA2009401D7 /* LibraryViewController.swift */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		83F6D1392B83A852009401D7 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		83F6D13A2B83A897009401D7 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				83F6D13B2B83A8B3009401D7 /* AuthManager */,
+				83F6D1392B83A852009401D7 /* NetworkManager */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		83F6D13B2B83A8B3009401D7 /* AuthManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AuthManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
