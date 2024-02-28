@@ -12,25 +12,23 @@ import Moya
 final class AuthManager {
 	
 	static let shared = AuthManager()
-	private let provider = MoyaProvider<AuthTarget>()
-	
-	struct Constants {
-		static let clientId = "2f840d4f818247b4b5badfa7295856ec"
-		static let clientSecret = "d333907cad5441178283782bb89c20c8"
-		static let scopes = "user-read-private"
-		static let redirectUri = "https://open.spotify.com/"
-	}
+	private let provider = MoyaProvider<AuthTarget>(
+		plugins: [
+			NetworkLoggerPlugin(configuration: NetworkLoggerPluginConfig.prettyLogging),
+			LoggerPlugin()
+		]
+	)
 	
 	public var signInURL: URL? {
-		let baseURL = "https://accounts.spotify.com/authorize"
+		let baseURL = GlobalConstants.baseURL + "/authorize"
 		
 		var components = URLComponents(string: baseURL)
 		
 		components?.queryItems = [
 			URLQueryItem(name: "response_type", value: "code"),
-			URLQueryItem(name: "client_id", value: Constants.clientId),
-			URLQueryItem(name: "scope", value: Constants.scopes),
-			URLQueryItem(name: "redirect_uri", value: Constants.redirectUri),
+			URLQueryItem(name: "client_id", value: GlobalConstants.AuthApi.clientId),
+			URLQueryItem(name: "scope", value: GlobalConstants.AuthApi.scopes),
+			URLQueryItem(name: "redirect_uri", value: GlobalConstants.AuthApi.redirectUri),
 			URLQueryItem(name: "show_dialog", value: "TRUE")
 		]
 		return components?.url
@@ -63,28 +61,32 @@ final class AuthManager {
 	
 	func exchangeCodeForToken(
 		code: String,
-		completion: @escaping ((Bool) -> Void)
+		completion: @escaping ((APIResult<Void>) -> ())
 	){
 		
 		provider.request(.getAccessToken(code: code)) { [weak self] result in
 			switch result {
 			case .success(let response):
 				guard let result = try? response.map(AuthResponse.self) else {
-					completion(false)
+					completion(.failure(.incorrectJson))
 					return
 				}
 				self?.cacheToken(result: result)
-				completion(true)
+				completion(.success(()))
 			case .failure(let error):
-				completion(false)
+				completion(.failure(.failedWith(error: error.localizedDescription)))
 			}
 		}
 	}
 	
-	private func refreshIfNeeded(
+	func refreshIfNeeded(
 		code: String,
 		completion: @escaping ((Bool) -> Void)
 	) {
+		
+		guard shouldRefreshToken else {
+			return
+		}
 		provider.request( .getRefreshToken(code: code)) { [weak self] result in
 			switch result {
 			case .success(let response):

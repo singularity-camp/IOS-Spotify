@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				navigationController.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
 				window?.rootViewController = navigationController
 		}
-		
+	//	AuthManager.shared.refreshIfNeeded()
 		window?.makeKeyAndVisible()
 	}
 

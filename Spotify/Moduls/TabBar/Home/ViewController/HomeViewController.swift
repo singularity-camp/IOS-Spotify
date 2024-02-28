@@ -43,6 +43,24 @@ final class HomeViewController: UIViewController {
 	// MARK: - Navigation bar
 	
 	private func setupNavigationBar() {
+		
+		title = "Home"
+		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationItem.largeTitleDisplayMode = .automatic
+		let navigationBarAppearance = UINavigationBarAppearance()
+		navigationBarAppearance.configureWithOpaqueBackground()
+		navigationBarAppearance.titleTextAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.white
+		]
+		navigationBarAppearance.largeTitleTextAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.white
+		]
+		navigationBarAppearance.backgroundColor = .black
+		
+		navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+		navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+		navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(
 			image: UIImage(named: "settings_icon"),
 			style: .done,
@@ -50,15 +68,9 @@ final class HomeViewController: UIViewController {
 			action: #selector(barButtonTapped))
 		navigationController?.navigationBar.tintColor = .white
 		
-		let backButton = UIBarButtonItem(title: "HOME", style: .plain, target: self, action: nil)
-		backButton.setTitleTextAttributes([.font: UIFont(name: "Inter-Bold", size: 30)!], for: .normal)
-		navigationItem.leftBarButtonItem = backButton
-		navigationController?.navigationBar.tintColor = .white
-		
-		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
 	}
 
-	// MARK: - Button action
+//	// MARK: - Button action
 	@objc func barButtonTapped() {
 		print("Settings")
 	}
@@ -99,6 +111,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 		guard let headerView = view as? UITableViewHeaderFooterView else { return }
 		headerView.textLabel?.textColor = .white
 		headerView.textLabel?.font = UIFont(name: "Inter-Regular", size: 15)
+		headerView.textLabel?.text = headerView.textLabel?.text?.capitalized
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
