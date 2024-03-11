@@ -9,6 +9,7 @@ import Foundation
 
 enum GlobalConstants {
 	static let baseURL = "https://accounts.spotify.com"
+	static let apiBaseUrl = "https://api.spotify.com"
 	
 	enum AuthApi {
 		static let clientId = "2f840d4f818247b4b5badfa7295856ec"

@@ -13,7 +13,6 @@ final class AuthViewModel {
 		
 		AuthManager.shared.exchangeCodeForToken(code: code) { result in
 			switch result {
-				
 			case .success():
 				completion(true)
 			case .failure(_):
@@ -21,5 +20,4 @@ final class AuthViewModel {
 			}
 		}
 	}
-	
 }

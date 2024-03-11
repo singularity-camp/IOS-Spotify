@@ -24,7 +24,7 @@ extension BaseTargetType {
 	}
 	
 	var task: Moya.Task {
-		return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+		return .requestPlain
 	}
 	
 	var headers: [String : String]? {

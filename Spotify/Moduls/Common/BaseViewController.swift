@@ -24,19 +24,40 @@ class BaseViewController: UIViewController {
 	// MARK: - LifeCycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		setupNavigationBar()
 		setupLoadingView()
+	}
+	
+	// MARK: - Navigation bar
+	
+	private func setupNavigationBar() {
+		
+		let navigationBarAppearance = UINavigationBarAppearance()
+		navigationBarAppearance.configureWithOpaqueBackground()
+		navigationBarAppearance.titleTextAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.white
+		]
+		navigationBarAppearance.largeTitleTextAttributes = [
+			NSAttributedString.Key.foregroundColor: UIColor.white
+		]
+		navigationBarAppearance.backgroundColor = .black
+		
+		navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+		navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+		navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
 	}
 	
 	// MARK: - Methods
 	func showLoader() {
-			DispatchQueue.main.async { [weak self] in
-					self?.loadingView.startLoading()
-			}
+		DispatchQueue.main.async { [weak self] in
+			self?.loadingView.startLoading()
+		}
 	}
+	
 	func hideLoader() {
-			DispatchQueue.main.async { [weak self] in
-					self?.loadingView.stopLoading()
-			}
+		DispatchQueue.main.async { [weak self] in
+			self?.loadingView.stopLoading()
+		}
 	}
 	
 	// MARK: - Private methods

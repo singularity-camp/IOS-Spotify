@@ -10,13 +10,13 @@ import Moya
 
 enum AuthTarget {
 	case getAccessToken(code: String)
-	case getRefreshToken(code: String)
+	case getRefreshToken(token: String)
 }
 
 extension AuthTarget: BaseTargetType {
-
+	
 	var path: String {
-		return "/api/token"
+			return "/api/token"
 	}
 	
 	var method: Moya.Method {
@@ -35,12 +35,11 @@ extension AuthTarget: BaseTargetType {
 				],
 				encoding: URLEncoding.default
 			)
-		case .getRefreshToken(let code):
+		case .getRefreshToken(let refreshToken):
 			return .requestParameters(
 				parameters: [
 					"grant_type": "refresh_token",
-					"code": code,
-					"redirect_uri": "https://open.spotify.com/"
+					"refresh_token": refreshToken
 				],
 				encoding: URLEncoding.default
 			)

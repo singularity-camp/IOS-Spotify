@@ -10,14 +10,17 @@ import SwiftKeychainWrapper
 import Moya
 
 final class AuthManager {
-	
 	static let shared = AuthManager()
+	
 	private let provider = MoyaProvider<AuthTarget>(
 		plugins: [
 			NetworkLoggerPlugin(configuration: NetworkLoggerPluginConfig.prettyLogging),
 			LoggerPlugin()
 		]
 	)
+	
+	private var refreshingToken = false
+	private var onRefreshBlocks = [(String) -> Void]()
 	
 	public var signInURL: URL? {
 		let baseURL = GlobalConstants.baseURL + "/authorize"
@@ -79,29 +82,58 @@ final class AuthManager {
 		}
 	}
 	
-	func refreshIfNeeded(
-		code: String,
-		completion: @escaping ((Bool) -> Void)
-	) {
-		
-		guard shouldRefreshToken else {
+	public func withValidToken(completion: @escaping (String) -> Void) {
+			guard !refreshingToken else {
+					onRefreshBlocks.append(completion)
+					return
+			}
+			
+			if shouldRefreshToken {
+				refreshIfNeeded { [weak self] success in
+							if success, let accessToken = self?.accessToken {
+									completion(accessToken)
+							}
+					}
+			} else {
+					guard let accessToken else { return }
+					completion(accessToken)
+			}
+	}
+	
+	func refreshIfNeeded(completion: ((Bool) -> Void)?) {
+		guard !refreshingToken else {
 			return
 		}
-		provider.request( .getRefreshToken(code: code)) { [weak self] result in
+		guard shouldRefreshToken else {
+			completion?(true)
+			return
+		}
+		refreshingToken = true
+		guard let refreshToken else { return }
+		
+		provider.request( .getRefreshToken(token: refreshToken)) { [weak self] result in
+			self?.refreshingToken = false
+			
 			switch result {
 			case .success(let response):
-				guard let result = try? response.map(AuthResponse.self) else {
-					completion(false)
-					return
+				do {
+					let result = try JSONDecoder().decode(AuthResponse.self, from: response.data)
+					print("Successfully refreshed")
+					self?.onRefreshBlocks.forEach{ $0(result.accessToken)}
+					self?.onRefreshBlocks.removeAll()
+					self?.cacheToken(result: result)
+					completion?(true)
+				} catch {
+					print(error.localizedDescription)
+					completion?(false)
 				}
-				self?.cacheToken(result: result)
-				completion(true)
-			case .failure(_):
-				completion(false)
+			case .failure(let error):
+				print(error.localizedDescription)
+				completion?(false)
 			}
 		}
 	}
-		
+	
 	private func cacheToken(result: AuthResponse) {
 		KeychainWrapper.standard.set(result.accessToken, forKey: "accessToken")
 		
@@ -110,5 +142,14 @@ final class AuthManager {
 		}
 		
 		UserDefaults.standard.set(Date().addingTimeInterval(TimeInterval(result.expiresIn)), forKey: "expirationDate")
+	}
+	
+	func signOut(completion: (Bool) -> Void) {
+		KeychainWrapper.standard.remove(forKey: "accessToken")
+		KeychainWrapper.standard.remove(forKey: "refreshToken")
+		UserDefaults.standard.setValue(nil,
+																	 forKey: "expirationDate")
+		
+		completion(true)
 	}
 }
