@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  Spotify
+
+  Created by Aneli  on 25.03.2024.
+  
+*/
+
+"New_released_albums" = "New Released Albums";
+"Featured_playlists" = "Featured Playlists";
+"Recommended" = "Recommended";
+"Home" = "Home";
+"Search" = "Search";
+"Your_library" = "Your library";
+"Settings" = "Settings";
+"Profile" = "Profile";
+"View_your_profile" = "View your profile";
+"Account" = "Account";
+"Sign_Out" = "Sign Out";
+"Cancel" = "Cancel";
+"Album_details" = "Album details";
+"Playlist_details" = "Playlist details";
