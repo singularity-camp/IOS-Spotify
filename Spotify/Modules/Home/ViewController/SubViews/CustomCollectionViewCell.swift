@@ -56,6 +56,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         titleLabel.text = data.title
     }
     
+    // MARK: - Setup
+
     private func setupViews() {
         isSkeletonable = true
         contentView.isSkeletonable = true

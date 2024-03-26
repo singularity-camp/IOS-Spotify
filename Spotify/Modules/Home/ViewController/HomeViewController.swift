@@ -187,6 +187,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
+// MARK: - SkeletonCollectionViewDataSource
+
 extension HomeViewController: SkeletonCollectionViewDataSource {
     
     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
@@ -223,6 +225,8 @@ extension HomeViewController: SkeletonCollectionViewDataSource {
         }
     }
 }
+
+// MARK: - СreateCollectionLayout
 
 extension HomeViewController {
     private func createCollectionLayout(section: Int) -> NSCollectionLayoutSection {

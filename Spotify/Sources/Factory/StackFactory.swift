@@ -8,7 +8,6 @@
 import UIKit
 
 final class StackFactory {
-    
     static func createStackView(
     spacing: CGFloat = 2,
     distribution: UIStackView.Distribution = .fillEqually,

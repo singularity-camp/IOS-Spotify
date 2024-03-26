@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: BaseViewController {
     
+    // MARK: Properties
+    
     private var sections = [Section]()
     private var currentLanguage: SupportedLanguages? {
         didSet {
@@ -16,6 +18,8 @@ class SettingsViewController: BaseViewController {
             didChange(language: currentLanguage)
         }
     }
+    
+    // MARK: UI Elements
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -25,6 +29,8 @@ class SettingsViewController: BaseViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         return tableView
     }()
+    
+    // MARK: Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +43,8 @@ class SettingsViewController: BaseViewController {
         title = "Settings".localized
     }
     
+    // MARK: UI Setup
+    
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "icon_language"),
@@ -44,32 +52,6 @@ class SettingsViewController: BaseViewController {
             target: self,
             action: #selector(didTapLanguage)
         )
-    }
-    
-    @objc
-    private func didTapLanguage() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        SupportedLanguages.all.forEach { language in
-            alert.addAction(
-                .init(
-                    title: language.localizedTitle,
-                    style: .default,
-                    handler: { [weak self] _ in
-                        self?.currentLanguage = language
-                    }
-                )
-            )
-        }
-        
-        alert.addAction(.init(title: "Cancel".localized, style: .cancel))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    private func didChange(language: SupportedLanguages) {
-        Bundle.setLanguage(language: language.rawValue)
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name("language"), object: nil)
-        }
     }
     
     private func setupViews() {
@@ -82,6 +64,8 @@ class SettingsViewController: BaseViewController {
             make.left.right.equalToSuperview()
         }
     }
+    
+    // MARK: Data Setup
     
     private func setupData() {
         sections.append(
@@ -115,6 +99,38 @@ class SettingsViewController: BaseViewController {
         )
     }
     
+    // MARK: Actions
+    
+    @objc
+    private func didTapLanguage() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        SupportedLanguages.all.forEach { language in
+            alert.addAction(
+                .init(
+                    title: language.localizedTitle,
+                    style: .default,
+                    handler: { [weak self] _ in
+                        self?.currentLanguage = language
+                    }
+                )
+            )
+        }
+        
+        alert.addAction(.init(title: "Cancel".localized, style: .cancel))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: Language Change
+    
+    private func didChange(language: SupportedLanguages) {
+        Bundle.setLanguage(language: language.rawValue)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name("language"), object: nil)
+        }
+    }
+    
+    // MARK: Navigation
+    
     private func showProfilePage() {
         let controller = ProfileViewController()
         controller.title = "Profile".localized
@@ -147,6 +163,9 @@ class SettingsViewController: BaseViewController {
         present(alert, animated: true)
     }
 }
+
+// MARK: - UITableViewDataSource, UITableViewDelegate
+
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count

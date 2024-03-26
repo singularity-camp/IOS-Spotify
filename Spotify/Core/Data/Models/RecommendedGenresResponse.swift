@@ -48,6 +48,7 @@ struct Track: Decodable {
         case album
     }
 }
+// MARK: - Playlists
 
 struct Playlists: Decodable {
     let description: String?
@@ -57,6 +58,8 @@ struct Playlists: Decodable {
     let name: String?
     let owner: User?
 }
+
+// MARK: - Artist
 
 struct Artist: Decodable {
     let externalUrls: ExternalUrls

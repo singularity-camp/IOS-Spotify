@@ -36,6 +36,8 @@ class BaseViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
+    // MARK: - Private Methods
+    
     private func addLanguageObserver() {
         NotificationCenter.default.addObserver(
             self,

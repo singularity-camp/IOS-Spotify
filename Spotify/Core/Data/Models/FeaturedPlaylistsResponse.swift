@@ -7,13 +7,19 @@
 
 import Foundation
 
+// MARK: - FeaturedPlaylistsResponse
+
 struct FeaturedPlaylistsResponse: Decodable {
     let playlists: PlaylistResponse
 }
 
+// MARK: - PlaylistResponse
+
 struct PlaylistResponse: Decodable {
     let items: [FeaturedPlaylists]
 }
+
+// MARK: - FeaturedPlaylists
 
 struct FeaturedPlaylists: Decodable {
     let name: String?
@@ -32,6 +38,8 @@ struct FeaturedPlaylists: Decodable {
         case owner
     }
 }
+
+// MARK: - User
 
 struct User: Decodable {
     let id: String?

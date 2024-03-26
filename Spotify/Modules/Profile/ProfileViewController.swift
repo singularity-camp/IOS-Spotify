@@ -21,40 +21,25 @@ class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private var displayNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont(name: "PlayfairDisplay-Regular", size: 14)
-        return label
-    }()
+    private var displayNameLabel = LabelFactory.createLabel(
+        font: UIFont(name: "Lato-Regular", size: 14)
+    )
     
-    private var idLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont(name: "PlayfairDisplay-Regular", size: 14)
-        return label
-    }()
+    private var idLabel = LabelFactory.createLabel(
+        font: UIFont(name: "Lato-Regular", size: 14)
+    )
     
-    private var emailLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont(name: "PlayfairDisplay-Regular", size: 14)
-        return label
-    }()
+    private var emailLabel = LabelFactory.createLabel(
+        font: UIFont(name: "Lato-Regular", size: 14)
+    )
     
-    private var countryLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont(name: "PlayfairDisplay-Regular", size: 14)
-        return label
-    }()
+    private var countryLabel = LabelFactory.createLabel(
+        font: UIFont(name: "Lato-Regular", size: 14)
+    )
     
-    private var productLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont(name: "PlayfairDisplay-Regular", size: 14)
-        return label
-    }()
+    private var productLabel = LabelFactory.createLabel(
+        font: UIFont(name: "Lato-Regular", size: 14)
+    )
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()

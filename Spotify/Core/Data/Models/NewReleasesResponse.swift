@@ -7,9 +7,13 @@
 
 import Foundation
 
+// MARK: - NewReleasesResponse
+
 struct NewReleasesResponse: Decodable {
     let albums: AlbumsDataModel
 }
+
+// MARK: - AlbumsDataModel
 
 struct AlbumsDataModel: Decodable {
     let items: [Album]
@@ -40,6 +44,8 @@ struct Album: Decodable {
         case name
     }
 }
+
+// MARK: - Artists
 
 struct Artists: Decodable {
     let id: String?

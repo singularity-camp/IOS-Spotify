@@ -152,6 +152,8 @@
 				C9937DFF2B7DEF9800DFDAAC /* AppDelegate.swift */,
 				C9937E012B7DEF9800DFDAAC /* SceneDelegate.swift */,
 				C9937E082B7DEF9A00DFDAAC /* Assets.xcassets */,
+				C9937E0A2B7DEF9A00DFDAAC /* LaunchScreen.storyboard */,
+				C9937E0D2B7DEF9A00DFDAAC /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -512,8 +514,6 @@
 				C958791D2B89425000CCD695 /* Core */,
 				C92D55CB2B7E98C0001BB7BE /* Modules */,
 				C92D55C92B7E97CC001BB7BE /* Resources */,
-				C9937E0A2B7DEF9A00DFDAAC /* LaunchScreen.storyboard */,
-				C9937E0D2B7DEF9A00DFDAAC /* Info.plist */,
 			);
 			path = Spotify;
 			sourceTree = "<group>";

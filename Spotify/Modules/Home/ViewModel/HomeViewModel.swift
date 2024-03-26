@@ -8,12 +8,17 @@
 import UIKit
 
 class HomeViewModel {
+    
+    // MARK: - Properties
+    
     private var sections = [HomeSectionType]()
     private var dispatchGroup = DispatchGroup()
     
     var numberOfSections: Int {
         return sections.count
     }
+    
+    // MARK: - Public Methods
     
     func getSectionViewModel(at section: Int) -> HomeSectionType {
         return sections[section]
@@ -57,6 +62,8 @@ class HomeViewModel {
         }
     }
     
+    // MARK: - Private Methods
+    
     private func loadAlbums(completion: @escaping () -> ()) {
         var albums: [AlbumsData] = []
         
@@ -82,7 +89,7 @@ class HomeViewModel {
                     self?.sections[index] = .newReleasedAlbums(title: "New_released_albums".localized, datamodel: albums)
                 }
                 completion()
-                case .failure(_):
+            case .failure(_):
                 break
             }
         }
@@ -112,7 +119,7 @@ class HomeViewModel {
                     self?.sections[index] = .featuredPlaylists(title: "Featured_playlists".localized, datamodel: playlists)
                 }
                 completion()
-                case .failure(_):
+            case .failure(_):
                 break
             }
         }

@@ -9,16 +9,21 @@ import UIKit
 import SkeletonView
 
 class RecommendedCollectionViewCell: UICollectionViewCell {
-    private enum Consraints {
+    
+    // MARK: - Constants
+    
+    private enum Constants {
         static let musicImageSize: CGFloat = 48
         static let musicImageCornerRadius: CGFloat = 24
         static let textsStackViewSpacing: CGFloat = 2
         static let rightViewSize: CGFloat = 24
     }
     
+    // MARK: - UI Elements
+    
     private var musicImage: UIImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = Consraints.musicImageCornerRadius
+        image.layer.cornerRadius = Constants.musicImageCornerRadius
         image.contentMode = .scaleAspectFill
         image.isSkeletonable = true
         image.skeletonCornerRadius = 24
@@ -26,7 +31,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
     }()
 
     private var textsStackView = StackFactory.createStackView(
-    isSkeletonable: true
+        isSkeletonable: true
     )
     
     private var titleLabel = LabelFactory.createLabel(
@@ -46,6 +51,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -54,6 +61,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Configuration
     
     func configure(data: RecommendedMusicData?) {
         guard let data = data else { return }
@@ -72,6 +81,8 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Setup
+    
     private func setupViews() {
         isSkeletonable = true
         contentView.isSkeletonable = true
@@ -89,7 +100,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         musicImage.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(12)
             make.top.bottom.equalToSuperview().inset(8)
-            make.size.equalTo(Consraints.musicImageSize)
+            make.size.equalTo(Constants.musicImageSize)
         }
         
         textsStackView.snp.makeConstraints { make in
@@ -102,8 +113,7 @@ class RecommendedCollectionViewCell: UICollectionViewCell {
         rightView.snp.makeConstraints { make in
             make.right.equalToSuperview().inset(12)
             make.centerY.equalToSuperview()
-            make.size.equalTo(Consraints.rightViewSize)
+            make.size.equalTo(Constants.rightViewSize)
         }
     }
 }
-
